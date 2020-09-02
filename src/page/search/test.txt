@@ -1,0 +1,61 @@
+:(
+    <div className="searchPage__results">
+    <p className="searchPage__resultCount">
+            About { resp?.searchInformation.formattedTotalResults } result ({resp?.searchInformation.formattedSearchTime} seconds) for {term}
+        </p>
+        
+    <div className="corpus">
+         <div className="searchPage__ads">
+     
+         <div className='ads'>
+                <h2>See result about</h2>
+                <div className="ads_body">
+    
+                    <div className="corpusads">
+                            
+                                <p className="title__ads">{adon.data.advertisements.title}</p>
+                                <p className="description__ads">{adon.data.advertisements.description}</p>
+                            
+                    </div>
+
+                    <div className="header">
+                        <img src={adon?.data.advertisements.thumbnail}  alt={adon.data.advertisements.thumbnail} className='ads__image' /> 
+                    </div>
+
+                </div>
+    
+                <div className="likeads">
+                        <ThumbUpAltIcon/>
+                </div>
+            </div>
+        </div>
+       
+
+        
+    <div className="results">
+          
+                {resp?.items.map( (item:any)  => (
+                    <div className="searchPage__result">
+                    <a href={item.link}>
+                    {item.pagemap?.cse_image?.length >0 && item.pagemap?.cse_image[0]?.src &&(
+                        <img src={item.pagemap?.cse_image?.length>0&& item.pagemap?.cse_image[0]?.src} alt="" className="searchPage__resultImage"/>
+                    )}
+                    {item.displayLink}  
+                    </a>
+                    
+                        <a  href={item.link} className="searchPage__resultTitle" >
+                        <h2>{item.title}</h2>
+                        
+                        </a>
+                        <p className="searchPage__resultSnippet">
+                        {item.snippet} 
+                        </p>
+                    </div>
+                ))}
+            </div>
+    
+    </div>
+        
+</div>
+
+)

@@ -7,8 +7,8 @@ export const actionTypes = {
 };
 
 const reducer = (state:any, action:any) =>{
-    console.log(action);
-
+    // console.log(action);
+    // console.log(action.term)
     switch(action.type){
         case actionTypes.SET_SEARCH_TERM:
             return{

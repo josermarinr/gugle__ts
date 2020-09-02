@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import API_KEY from './API_KEY';
-import { ApolloClient, InMemoryCache, gql, useQuery} from '@apollo/client';
+
 
 
 const CONTEXT_KEY = '880e5e8254c95712d'
@@ -24,7 +24,8 @@ function UseGoogleSearch(term: any) {
         fetchData()
     }, [term])
    
-return {data}
+        return {data}
+
 }
 
 export default UseGoogleSearch

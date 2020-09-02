@@ -1,12 +1,17 @@
 import React from 'react'
 import './SearchPage.css'
 import {Link} from 'react-router-dom'
-import './../../components/search/Search'
+import Search from './../../components/search/Search'
+
 import { useStateValue } from '../../StateProvider'
 import UseGoogleSearch from '../../UseGoogleSearch';
 import Response from './response'
-import Search from './../../components/search/Search'
-import { RootObject, Item, Pagemap, Sitenavigationelement, Hatomfeed, Hcard, Cseimage, Metatag, Csethumbnail, SearchInformation, Context, Queries, Request, Url } from './interface';
+import RootObject from './interface';
+import { RootObject as advers, Data} from './adsinterface';
+import responseads from './responseads'
+import Ads from '../../components/ads/Ads'
+import respu from './default'
+
 
 import SearchIcon from '@material-ui/icons/Search';
 import DescriptionIcon from '@material-ui/icons/Description';
@@ -14,110 +19,203 @@ import ImageIcon from '@material-ui/icons/Image';
 import RoomIcon from '@material-ui/icons/Room';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import { useState } from 'react';
+
 
 
 
 
 function SearchPage() {
     
-
     const [ {term} , dispatch]:any = useStateValue();
-    //const {data}:any = UseGoogleSearch( term );
+   
+    //const ads = Ads( term )
+    // let adver : any;
+    //  if(ads !== null){
+    //      adver = ads
+    //  }else{
+    //      adver  = responseads
+    //  }
+
+        
+
+     
+        //const { data }:any  = UseGoogleSearch( term );
+     
      
     
+   
+     
     //mock testing
+ 
+    const   data  : any = respu;
+    let adver:any  = responseads
+    console.log(adver)
 
-     const  data :RootObject = Response;
+    console.log(term)
+  
 
-    console.log(data)
+    let state = {
+        ads : '',
+        like: false,
+    };
+    const [nameAds, setNameAds] = useState("");
+
+    const likeAds = (e:any) => {
+        e.preventDefault();
+
+        const input = e.target;
+        console.log(e)
+       if(state.like === true){
+        state.like = false
+       }{
+        state.like = true
+       }
+        
+        state.ads += (setNameAds(e.target.name) );
+        
+      };
+      console.log(state)
+      const savinLocalStorage = () =>{
+          const {ads, like} = state;
+          const stringLike: string = `${like}`;
+          localStorage.setItem('pub', ads);
+          localStorage.setItem('like', stringLike);
+      }
+      savinLocalStorage()
     return (
+  
         <div className='searchPage'>
-        <div className="searchPage__header">
-             <Link to="/">
-                 <img className='searchPage__logo'
-                 src='https://cdn.1min30.com/wp-content/uploads/2017/07/Le-logo-Google.png'
-                  alt="google"/>
-             </Link>
+            <div className="searchPage__header">
+                <Link to="/">
+                    <img className='searchPage__logo'
+                    src='https://cdn.1min30.com/wp-content/uploads/2017/07/Le-logo-Google.png'
+                    alt="google"/>
+                </Link>
 
-             <div className="searchPage__headerBody">
-                 <Search hideButttons/>
-                 <div className="searchPage__options">
-                     <div className="searchPage__optionsLeft">
-                         <div className="searchPage__option">
-                         <SearchIcon/>
-                         <Link to="/all">all</Link>
-                         </div>
+                <div className="searchPage__headerBody">
+                    <Search hideButttons/>
+                    <div className="searchPage__options">
+                        <div className="searchPage__optionsLeft">
+                            <div className="searchPage__option">
+                            <SearchIcon/>
+                            <Link to="/all">all</Link>
+                            </div>
 
-                         <div className="searchPage__option">
-                         <DescriptionIcon/>
-                         <Link to="/news">news</Link>
-                         </div>
+                            <div className="searchPage__option">
+                            <DescriptionIcon/>
+                            <Link to="/news">news</Link>
+                            </div>
 
-                         <div className="searchPage__option">
-                         <ImageIcon/>
-                         <Link to="/image">images</Link>
-                         </div>
+                            <div className="searchPage__option">
+                            <ImageIcon/>
+                            <Link to="/image">images</Link>
+                            </div>
 
-                         <div className="searchPage__option">
-                         <LocalOfferIcon/>
-                         <Link to="/shopping">shopping</Link>
-                         </div>
+                            <div className="searchPage__option">
+                            <LocalOfferIcon/>
+                            <Link to="/shopping">shopping</Link>
+                            </div>
 
-                         <div className="searchPage__option">
-                         <RoomIcon/>
-                         <Link to="/maps">maps</Link>
-                         </div>
+                            <div className="searchPage__option">
+                            <RoomIcon/>
+                            <Link to="/maps">maps</Link>
+                            </div>
 
-                         <div className="searchPage__option">
-                         <MoreVertIcon/>
-                         <Link to="/more">more</Link>
-                         </div>
-                         
-                     </div>
-                     <div className="searchPage__optionsRight">
-                        <div className="searchPage__option"> 
-                            <Link to="/settings">settings</Link>
+                            <div className="searchPage__option">
+                            <MoreVertIcon/>
+                            <Link to="/more">more</Link>
+                            </div>
+                            
                         </div>
+                        <div className="searchPage__optionsRight">
+                            <div className="searchPage__option"> 
+                                <Link to="/settings">settings</Link>
+                            </div>
 
-                        <div className="searchPage__option"> 
-                            <Link to="/tools">tools</Link>
+                            <div className="searchPage__option"> 
+                                <Link to="/tools">tools</Link>
+                            </div>
                         </div>
-                     </div>
-                 </div>
-             </div>
+                    </div>
+                </div>
 
-            
-        </div>
+                
+            </div>
 
-    
+         
+            {term && (
             <div className="searchPage__results">
                 <p className="searchPage__resultCount">
-                    About { data?.searchInformation.formattedTotalResults } result ({data?.searchInformation.formattedSearchTime} seconds) for {term}
-                </p>
-
-                {data?.items.map( (item:any)  => (
-                    <div className="searchPage__result">
-                       <a href={item.link}>
-                       {item.pagemap?.cse_image?.length >0 && item.pagemap?.cse_image[0]?.src &&(
-                           <img src={item.pagemap?.cse_image?.length>0&& item.pagemap?.cse_image[0]?.src} alt="" className="searchPage__resultImage"/>
-                       )}
-                       {item.displayLink}  
-                       </a>
+              
+                       About { data?.searchInformation.formattedTotalResults } result ({ data?.searchInformation.formattedSearchTime } seconds) for {term}   
+                    </p>
                     
-                        <a  href={item.link} className="searchPage__resultTitle" >
-                        <h2>{item.title}</h2>
-                        
-                        </a>
-                        <p className="searchPage__resultSnippet">
-                           {item.snippet} 
-                        </p>
-                    </div>
-                ))}
-            </div>
-      
-        
-</div>
+                <div className="corpus">
+                         <div className="searchPage__ads">
+                 
+                        <div className='ads'>
+                            <h2>See result about</h2>
+                            
+                                 <div className="ads_body">
+                            
+                                 <div className="corpusads">
+                                
+                                              <p className="title__ads">{adver.data.advertisements.title}</p>
+                                             <p className="description__ads">{adver.data.advertisements.description}</p>  
+                                         
+                                 </div>
+ 
+                                     <div className="header">
+                                         {!adver?(
+                                            <img src={'https://workshop-advertisement.osc-fr1.scalingo.io/' + adver?.data.advertisements.thumbnail}  alt={adver.data.advertisements.thumbnail} className='ads__image' />   
+                                         ):(
+                                            <img src={adver?.data.advertisements.thumbnail}  alt={adver.data.advertisements.title} className='ads__image' />   
+                                         )}
+                                        
+                                     </div>
+ 
+                             </div>
+                 
+                            
+                            <div className="likeads">
+                            
+                            <ThumbUpAltIcon name={adver.data.advertisements.title}  onClick={likeAds}  />
+                            </div>
+                        </div>
+                    </div> 
+                     
 
+                     
+                  <div className="results">
+                      
+                            {data?.items.map( (item:any)  => (
+                                <div className="searchPage__result">
+                                <a href={item.link}>
+                                {item.pagemap?.cse_image?.length >0 && item.pagemap?.cse_image[0]?.src &&(
+                                    <img src={item.pagemap?.cse_image?.length>0&& item.pagemap?.cse_image[0]?.src} alt="" className="searchPage__resultImage"/>
+                                )}
+                                {item.displayLink}  
+                                </a>
+                                
+                                    <a  href={item.link} className="searchPage__resultTitle" >
+                                    <h2>{item.title}</h2>
+                                    
+                                    </a>
+                                    <p className="searchPage__resultSnippet">
+                                    {item.snippet} 
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                  
+                </div> 
+                    
+            </div>
+        
+        )}
+        </div>
     )
 }
 

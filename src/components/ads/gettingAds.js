@@ -7,7 +7,7 @@ import { actionTypes } from '../../reducer';
 
 const ADS_QUERY =  gql`
       
-      query Ads($term: String! ){
+      query advertisements($term: String! ){
         advertisements(research: $term){
             title
             description
@@ -17,25 +17,21 @@ const ADS_QUERY =  gql`
       
     `;
 
- function Ads( term: any){
+ function gettingAds(  term  ){
 
-   
-    const { loading, error, data } = useQuery(ADS_QUERY, {
-      variables: { term },
-     
-    });
-  
-    if (loading) return null;
-    if (error) return `Error! ${error}`;
-  
-    console.log('escribiste'+ term)
-    console.log(data)
-   
-      return { data }
-    
 
+          const { loading, error, data } = useQuery(ADS_QUERY, {
+            variables: { term },
+          });
+      
+        if (loading) return null;
+        if (error) return `Error! ${error}`;
+      
+        console.log('escribiste'+ term)
+        console.log(data)
+      
 
 }
 
-export default Ads
+export default gettingAds
 
