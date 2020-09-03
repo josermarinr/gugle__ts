@@ -1,3 +1,4 @@
+import process from 'process'
 import React from 'react'
 import './SearchPage.css'
 import {Link} from 'react-router-dom'
@@ -30,18 +31,24 @@ function SearchPage() {
     
     const [ {term} , dispatch]:any = useStateValue();
    
-    //const ads = Ads( term )
+    
+
+
     // let adver : any;
     //  if(ads !== null){
-    //      adver = ads
+    //      
     //  }else{
     //      adver  = responseads
     //  }
-
-        
+    let adver: any;
+    if (process.env.REACT_DEBUG_MODE) {
+        adver = responseads
+    } else {
+        adver = Ads( term );
+    }
 
      
-        //const { data }:any  = UseGoogleSearch( term );
+    const { data }:any  = UseGoogleSearch( term );
      
      
     
@@ -49,9 +56,9 @@ function SearchPage() {
      
     //mock testing
  
-    const   data  : any = respu;
-    let adver:any  = responseads
-    console.log(adver)
+    //const   data  : any = respu;
+    //let adver:any  = responseads
+    mylog(adver)
 
     console.log(term)
   
@@ -162,17 +169,16 @@ function SearchPage() {
                             
                                  <div className="corpusads">
                                 
-                                              <p className="title__ads">{adver.data.advertisements.title}</p>
-                                             <p className="description__ads">{adver.data.advertisements.description}</p>  
+                                            <p className="title__ads">{adver?.data.advertisements.title}</p>
+                                             <p className="description__ads">{adver?.data.advertisements.description}</p>  
                                          
                                  </div>
  
                                      <div className="header">
-                                         {!adver?(
-                                            <img src={'https://workshop-advertisement.osc-fr1.scalingo.io/' + adver?.data.advertisements.thumbnail}  alt={adver.data.advertisements.thumbnail} className='ads__image' />   
-                                         ):(
-                                            <img src={adver?.data.advertisements.thumbnail}  alt={adver.data.advertisements.title} className='ads__image' />   
-                                         )}
+                                       
+                                            <img src={'https://workshop-advertisement.osc-fr1.scalingo.io/' + adver?.data.advertisements.thumbnail}  alt={adver?.data.advertisements.thumbnail} className='ads__image' />   
+                                        
+                                    
                                         
                                      </div>
  
@@ -181,7 +187,7 @@ function SearchPage() {
                             
                             <div className="likeads">
                             
-                            <ThumbUpAltIcon name={adver.data.advertisements.title}  onClick={likeAds}  />
+                            <ThumbUpAltIcon   />
                             </div>
                         </div>
                     </div> 

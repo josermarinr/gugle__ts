@@ -3,7 +3,7 @@ import {  gql, useQuery, useMutation  } from '@apollo/client';
 import { Input } from '@material-ui/core';
 import { useStateValue } from '../../StateProvider';
 import { actionTypes } from '../../reducer';
-
+import respond from '../../page/search/responseads'
 
 const ADS_QUERY =  gql`
       
@@ -26,7 +26,7 @@ const ADS_QUERY =  gql`
     });
   
     if (loading) return null;
-    if (error) return `Error! ${error}`;
+    if (error) return respond && console.log(error);
   
     console.log('escribiste'+ term)
     console.log(data)
