@@ -34,18 +34,18 @@ function SearchPage() {
     
 
 
-    // let adver : any;
+    let adver : any;
     //  if(ads !== null){
     //      
     //  }else{
-    //      adver  = responseads
+        //  adver  = responseads
     //  }
-    let adver: any;
-    if (process.env.REACT_DEBUG_MODE) {
-        adver = responseads
-    } else {
+    // let adver: any;
+    // if (process.env.REACT_DEBUG_MODE) {
+    //     adver = responseads
+    // } else {
         adver = Ads( term );
-    }
+    // }
 
      
     const { data }:any  = UseGoogleSearch( term );
@@ -58,7 +58,7 @@ function SearchPage() {
  
     //const   data  : any = respu;
     //let adver:any  = responseads
-    mylog(adver)
+    // mylog(adver)
 
     console.log(term)
   
